@@ -1,0 +1,17 @@
+using System;
+using UnityEngine;
+
+[CreateAssetMenu]
+public class ItemData : ScriptableObject
+{
+    public string displayName;
+    public Sprite icon;
+    public ShopItemType type;
+    public string description;
+}
+
+public enum ShopItemType
+{
+    Machine, Decoration
+}
+

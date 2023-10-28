@@ -7,31 +7,31 @@ using UnityEngine;
 public class OpenUIPanel : MonoBehaviour
 {
     public UIMenu panel;
-      
+    public Player player;
+
     public void OpenPanel()
     {
         panel.ShowMenu();
     }
 
-    public void Update()
-    {   
-        if (Input.GetMouseButtonDown(0))
-            CheckIfSomethingWasClicked(); 
-    }
+    //TODO взаимодействовать с объектами через E -- также как с НПС -- когда мы в определенном радиусе
+    //получается есть два типа UI -- те что через клик и те что через кнопку взаимодействия -- это не странно?
+    //задания лучше показывать на экране -- для начала всегда 
+    //меню настроек можно открывать через кнопку -- посмотреть как это работает в ведьмаке
 
-    //craftMenu:"Microscope"
-    //inventory: "InventoryButton"
-    private void CheckIfSomethingWasClicked()
+    void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (player != null)
+        {
+            bool playerInRange = Vector2.Distance(transform.position, player.transform.position) < 2f;
 
-        RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction);
+            bool panelShouldBeShown = playerInRange && Input.GetKeyDown(KeyCode.E) && panel.isIteractableByKey;
 
-        if (hit.collider && hit.collider.name == gameObject.name)
-        {   
-            Debug.Log("I was clicked!! "+ gameObject.name);
-            panel.ShowMenu();
+            if (panelShouldBeShown)
+            {
+                Debug.Log("this panel could be shown");
+                panel.ShowMenu();
+            }
         }
-
     }
 }

@@ -53,8 +53,8 @@ public class Dialogue : MonoBehaviour
     }
 
     public void StartDialogue()
-    {   
-     ///   Debug.Log("STARTING DIALOG "+dialogueName);
+    {
+        ///   Debug.Log("STARTING DIALOG "+dialogueName);
         isStoppedCompletely = false;
         if (!isStopped)
         {
@@ -87,11 +87,11 @@ public class Dialogue : MonoBehaviour
     }
 
     public void Update()
-    {   
-        if(showingCustomMessage && Input.GetKeyDown(KeyCode.Escape)){
+    {
+        if (showingCustomMessage && Input.GetKeyDown(KeyCode.Escape))
+        {
             dialoguePanel.SetActive(false);
         }
-
 
         if (!isStoppedCompletely)
         {
@@ -210,7 +210,7 @@ public class Dialogue : MonoBehaviour
                     nameTag.text = tagValue;
                     break;
                 case PORTRAIT_TAG:
-                  //  Debug.Log("TAG = " + tagValue);
+                    //  Debug.Log("TAG = " + tagValue);
                     portraitAnimator.Play(tagValue);
                     break;
                 default:
