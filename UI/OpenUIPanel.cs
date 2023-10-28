@@ -14,11 +14,6 @@ public class OpenUIPanel : MonoBehaviour
         panel.ShowMenu();
     }
 
-    //TODO взаимодействовать с объектами через E -- также как с НПС -- когда мы в определенном радиусе
-    //получается есть два типа UI -- те что через клик и те что через кнопку взаимодействия -- это не странно?
-    //задания лучше показывать на экране -- для начала всегда 
-    //меню настроек можно открывать через кнопку -- посмотреть как это работает в ведьмаке
-
     void Update()
     {
         if (player != null)
@@ -29,7 +24,7 @@ public class OpenUIPanel : MonoBehaviour
 
             if (panelShouldBeShown)
             {
-                Debug.Log("this panel could be shown");
+                //  Debug.Log("this panel could be shown");
                 panel.ShowMenu();
             }
         }
