@@ -38,7 +38,6 @@ public class LadderMovement : MonoBehaviour
     {
         if (collision.CompareTag("Ladder"))
         {
-            Debug.Log("HEY LADDER");
             isLadder = true;
         }
     }

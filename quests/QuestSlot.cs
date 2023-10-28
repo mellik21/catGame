@@ -18,24 +18,20 @@ public class QuestSlot : MonoBehaviour
 
     private Button button;
      
-    private GameObject descriptionPanel;
+    public GameObject descriptionPanel { get; set; }
 
     private TextMeshProUGUI d_title;
     private TextMeshProUGUI d_desc;
 
+
     private void Start()
     {
-        descriptionPanel = GameObject.Find("QuestDescription");
-        Debug.Log("IS DESC PANEL FOUND ?  = " + (descriptionPanel != null));
         slots = FindObjectsOfType<QuestSlot>();
         list = FindObjectOfType<QuestList>();
-        
     }
 
     public void OpenQuest()
     {
-        Debug.Log("OPENING THE QUEST!!");
-        Debug.Log("IS DESC PANEL FOUND ?  = " + (descriptionPanel != null));
         d_title = descriptionPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         d_title.text = questItem.title;
 
@@ -87,7 +83,6 @@ public class QuestSlot : MonoBehaviour
     {
         list.CompleteQuest(questItem.questData);
         ClearDescription();
-     
     }
 
     private void ChangeColor()

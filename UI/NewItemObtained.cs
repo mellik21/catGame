@@ -13,7 +13,7 @@ public class NewItemObtained : MonoBehaviour
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI itemName;
     [SerializeField] private TextMeshProUGUI itemDescription;
-
+    private bool isOpen = false;
 
     void Start()
     {
@@ -25,19 +25,25 @@ public class NewItemObtained : MonoBehaviour
 
     public void Show()
     {
-
-        Debug.Log("NIO: SHOW");
         itemObtainedPanel.SetActive(true); 
 
         icon.sprite = itemData.icon;
         itemName.text = itemData.name;
         itemDescription.text = itemData.description;
-
+        isOpen = true;
     }
+
+     void Update(){
+          if(isOpen && Input.GetKeyDown(KeyCode.Escape)){
+          isOpen = false;
+          itemObtainedPanel.SetActive(false);
+        }   
+    }
+
 
     void Hide()
     {
-        Debug.Log("NIO: HIDE");
+        isOpen = false;
         itemObtainedPanel.SetActive(false);
     }
 

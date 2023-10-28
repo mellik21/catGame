@@ -14,7 +14,6 @@ public class QuestItem
     public QuestSlot questSlot;
     public QuestType type;
     public int targetCount;
- //   public Character character { get; set; }
 
     public QuestItem(QuestData questData)
     {

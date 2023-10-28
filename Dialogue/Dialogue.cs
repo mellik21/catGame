@@ -7,7 +7,7 @@ using Ink.Runtime;
 using System;
 
 public class Dialogue : MonoBehaviour
-{   
+{
     public TextAsset inkFile;
 
     #region GameObjects
@@ -37,6 +37,10 @@ public class Dialogue : MonoBehaviour
 
     public static event Action<string> OnCurrentDialogFinished;
 
+    public bool isStoppedCompletely = false;
+
+    public bool showingCustomMessage = false;
+
 
     public void ShowCustomMessage(string _message, string author, string avatarTag)
     {
@@ -44,13 +48,14 @@ public class Dialogue : MonoBehaviour
         message.text = _message;
         nameTag.text = author;
         portraitAnimator.Play(avatarTag);
+
+        showingCustomMessage = true;
     }
 
-  
-
     public void StartDialogue()
-    {
-        Debug.Log("DM: START DIALOGUE");
+    {   
+     ///   Debug.Log("STARTING DIALOG "+dialogueName);
+        isStoppedCompletely = false;
         if (!isStopped)
         {
             InitializeAndShow();
@@ -59,7 +64,7 @@ public class Dialogue : MonoBehaviour
             story = new Story(inkFile.text);
 
             AdvanceDialogue();
-        }    
+        }
     }
 
     private void InitializeAndShow()
@@ -82,32 +87,41 @@ public class Dialogue : MonoBehaviour
     }
 
     public void Update()
-    {
-        if (isActive && Input.GetKeyDown(KeyCode.E))
-        {
-            if (story.canContinue)
-            {
-                AdvanceDialogue();
-            }
-
-            if (story.currentChoices.Count != 0)
-            {
-                StartCoroutine(ShowChoices());
-            }
-
-            if (!story.canContinue && story.currentChoices.Count <= 0)
-            {
-                isStopped = true;
-            }
+    {   
+        if(showingCustomMessage && Input.GetKeyDown(KeyCode.Escape)){
+            dialoguePanel.SetActive(false);
         }
 
-        if (isStopped && Input.GetKeyDown(KeyCode.E))
-        {
-            Debug.Log("IS STOPPED!!!!!");
-            StopAllCoroutines();
-            OnCurrentDialogFinished?.Invoke(dialogueName);
 
-            dialoguePanel.SetActive(false);
+        if (!isStoppedCompletely)
+        {
+            if (isActive && Input.GetKeyDown(KeyCode.E))
+            {
+                if (story.canContinue)
+                {
+                    AdvanceDialogue();
+                }
+
+                if (story.currentChoices.Count != 0)
+                {
+                    StartCoroutine(ShowChoices());
+                }
+
+                if (!story.canContinue && story.currentChoices.Count <= 0)
+                {
+                    isStopped = true;
+                }
+            }
+
+            if (isStopped && Input.GetKeyDown(KeyCode.E))
+            {
+                StopAllCoroutines();
+                OnCurrentDialogFinished?.Invoke(dialogueName);
+
+                dialoguePanel.SetActive(false);
+                isStoppedCompletely = true;
+                //Debug.Log("DIALOG "+dialogueName+ " WAS STOPPED COMPLETELY");
+            }
         }
     }
 
@@ -120,7 +134,7 @@ public class Dialogue : MonoBehaviour
 
         HandleTags();
         StopAllCoroutines();
-    
+
         StartCoroutine(TypeSentence(currentSentence));
     }
 
@@ -178,8 +192,8 @@ public class Dialogue : MonoBehaviour
 
     private void HandleTags()
     {
-      List<string>  currentTags = story.currentTags;
-     
+        List<string> currentTags = story.currentTags;
+
         foreach (string tag in currentTags)
         {
             string[] splitTag = tag.Split(':');
@@ -196,7 +210,7 @@ public class Dialogue : MonoBehaviour
                     nameTag.text = tagValue;
                     break;
                 case PORTRAIT_TAG:
-                    Debug.Log("TAG = "+tagValue);
+                  //  Debug.Log("TAG = " + tagValue);
                     portraitAnimator.Play(tagValue);
                     break;
                 default:

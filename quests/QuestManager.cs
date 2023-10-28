@@ -8,6 +8,7 @@ using TMPro;
 public class QuestManager : MonoBehaviour
 {
     public GameObject slotPrefab;
+    public GameObject descriptionPanel;
     public int size;
     public List<QuestItem> currentQuests = new List<QuestItem>();
     private Dictionary<QuestItem, QuestSlot> slotsMap = new Dictionary<QuestItem, QuestSlot>();
@@ -52,7 +53,10 @@ public class QuestManager : MonoBehaviour
         GameObject newSlot = Instantiate(slotPrefab);
         newSlot.transform.SetParent(transform, false);
 
+
         QuestSlot newSlotComponent = newSlot.GetComponent<QuestSlot>();
+        newSlotComponent.descriptionPanel = descriptionPanel;
+
         return newSlotComponent;
     }
 

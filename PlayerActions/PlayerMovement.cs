@@ -29,7 +29,6 @@ public class Player : MonoBehaviour
             return;
         }
 
-
         horizontal = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded())

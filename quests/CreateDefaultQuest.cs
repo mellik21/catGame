@@ -10,6 +10,6 @@ public class CreateDefaultQuest : MonoBehaviour
 
     public void Start()
 	{
-//W		questList.StartNewQuest(questData);
+		questList.StartNewQuest(questData);
     }
 }

@@ -32,10 +32,10 @@ public class Character : MonoBehaviour
 
         if (dialogShouldBeStarted)
         {
-            Debug.Log("DIALOG SHOULD START!!");
+            Debug.Log("this characher has something to say");
             Dialogue dialogue = currentQuest.dialogue;
        
-            if (dialogue.isStopped)
+            if (dialogue.isStoppedCompletely)
             {
                 if (currentQuest.isFinished)
                 {
