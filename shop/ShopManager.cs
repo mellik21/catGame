@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System;
 
 public class ShopManager : MonoBehaviour
 {
@@ -14,15 +15,23 @@ public class ShopManager : MonoBehaviour
 
     public ShopData currentData { get; set; }
 
+    private GameObject microscope;
+
     void Start()
     {
         slots = new List<ShopSlot>(size);
+        microscope = GameObject.Find("Microscope");
     }
 
     private void OnEnable()
     {
         Shop.OnShopChange += DrawShop;
-        //ShopSlot.OnShopSlotClicked += SaveCurrentSlot();
+        ShopSlot.OnShopSlotClicked += SaveCurrentSlot;
+    }
+
+    void SaveCurrentSlot(ShopData data)
+    {
+        this.currentData = data;
     }
 
     void ResetShop()
@@ -64,6 +73,17 @@ public class ShopManager : MonoBehaviour
         slots.Add(newSlotComponent);
     }
 
+    public void PurchaseItem()
+    {
 
+        Debug.Log((microscope != null));
+        if (currentData.itemType.ToString() == "Microscope")
+        {
+            SpriteRenderer micPic = microscope.GetComponent<SpriteRenderer>();
+            micPic.sprite = currentData.icon;
+            micPic.transform.localScale = Vector2.one;
+            microscope.SetActive(true);
+        }
+    }
 
 }

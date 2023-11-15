@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class ShopSlot : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class ShopSlot : MonoBehaviour
 
     private GameObject shopManager;
 
-    //  public static event Action<ShopData> OnShopSlotClicked;
+    public static event Action<ShopData> OnShopSlotClicked;
 
     public void Start()
     {
@@ -48,7 +49,7 @@ public class ShopSlot : MonoBehaviour
         TextMeshProUGUI price = descriptionPanel.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
         price.text = shopData.price.ToString() + " TEN";
 
-        //  shopManager.currentData = shopData;
+        OnShopSlotClicked?.Invoke(shopData);
     }
 
     public void ClearSlot()
