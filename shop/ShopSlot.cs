@@ -8,7 +8,6 @@ public class ShopSlot : MonoBehaviour
 {
     public GameObject descriptionPanel { get; set; }
     private ShopData shopData;
-
     private Image icon;
     private TextMeshProUGUI labelText;
     private TextMeshProUGUI d_title;
@@ -17,8 +16,14 @@ public class ShopSlot : MonoBehaviour
     private Image background;
     private LayoutElement layoutElement;
 
+    private GameObject shopManager;
+
+    //  public static event Action<ShopData> OnShopSlotClicked;
+
     public void Start()
     {
+        shopManager = GameObject.Find("ItemsList");
+
         transform.GetChild(0).gameObject.SetActive(true);
         transform.GetChild(1).gameObject.SetActive(true);
 
@@ -31,7 +36,19 @@ public class ShopSlot : MonoBehaviour
 
     public void WasClicked()
     {
-        ShowDescription();
+        d_title = descriptionPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        d_title.text = shopData.displayName;
+
+        d_desc = descriptionPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        d_desc.text = shopData.description;
+
+        Image image = descriptionPanel.transform.GetChild(2).GetComponent<Image>();
+        image.sprite = icon.sprite;
+
+        TextMeshProUGUI price = descriptionPanel.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        price.text = shopData.price.ToString() + " TEN";
+
+        //  shopManager.currentData = shopData;
     }
 
     public void ClearSlot()
@@ -59,24 +76,6 @@ public class ShopSlot : MonoBehaviour
         background.enabled = true;
         layoutElement.enabled = true;
     }
-
-
-    public void ShowDescription()
-    {
-        d_title = descriptionPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        d_title.text = shopData.displayName;
-
-        d_desc = descriptionPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        d_desc.text = shopData.description;
-
-        Image image = descriptionPanel.transform.GetChild(2).GetComponent<Image>();
-        image.sprite = icon.sprite;
-
-        TextMeshProUGUI price = descriptionPanel.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
-        price.text = shopData.price.ToString() + " TEN";
-    }
-
-
     public void ClearDescription()
     {
         d_title = descriptionPanel.transform.GetChild(0).GetComponent<TextMeshProUGUI>();

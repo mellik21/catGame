@@ -12,6 +12,8 @@ public class ShopManager : MonoBehaviour
     public List<ShopSlot> slots;
     public GameObject descriptionPanel;
 
+    public ShopData currentData { get; set; }
+
     void Start()
     {
         slots = new List<ShopSlot>(size);
@@ -20,6 +22,7 @@ public class ShopManager : MonoBehaviour
     private void OnEnable()
     {
         Shop.OnShopChange += DrawShop;
+        //ShopSlot.OnShopSlotClicked += SaveCurrentSlot();
     }
 
     void ResetShop()
@@ -46,7 +49,6 @@ public class ShopManager : MonoBehaviour
                 slot.DrawSlot(shop[i]);
             }
         }
-
     }
 
     void CreateShopSlot()
@@ -61,5 +63,7 @@ public class ShopManager : MonoBehaviour
 
         slots.Add(newSlotComponent);
     }
+
+
 
 }
